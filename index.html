@@ -113,7 +113,9 @@ Exhibitions
 contents["Four Sounds"] = {
   type: "image",
   value: "four-sounds.jpg",
-  caption: "Four Sounds, 2026"
+  caption: "Four Sounds, 
+    Micah Lexier, Hwang Eunyoung
+  2026"
 };
 
 /* =====================================
@@ -150,6 +152,7 @@ if (work.startsWith("---")) {
   // 캡션 만들기
   const caption = document.createElement("div");
   caption.textContent = data.caption || "";
+  caption.style.whiteSpace = "pre-line";
   caption.style.width = "80%";
   caption.style.marginBottom = "18px";
   caption.style.fontSize = "14px";
