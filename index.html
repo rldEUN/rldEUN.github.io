@@ -112,8 +112,10 @@ Exhibitions
 // 사진을 추가할 작품만 아래에 등록하면 돼.
 contents["Four Sounds"] = {
   type: "image",
-  value: "four-sounds_004.jpg",
-         "four-sounds_005.jpg",
+  value: [
+    "four-sounds_004.jpg",
+    "four-sounds_005.jpg"
+  ],
   caption: `Four Sounds,
 Micah Lexier, Hwang Eunyoung
 2026`
@@ -163,18 +165,25 @@ if (work.startsWith("---")) {
   wrapper.appendChild(caption);
 
   // 이미지 만들기
-  const img = document.createElement("img");
-  img.src = data.value;
-  img.alt = work;
-  img.style.display = "block";
-  img.style.maxWidth = "80%";
-  img.style.maxHeight = "80vh";
-  img.style.width = "auto";
-  img.style.height = "auto";
-  img.style.objectFit = "contain";
-  img.style.margin = "0";
+  const images = Array.isArray(data.value)
+    ? data.value
+    : [data.value];
 
-  wrapper.appendChild(img);
+  images.forEach((src) => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = work;
+    img.style.display = "block";
+    img.style.maxWidth = "80%";
+    img.style.maxHeight = "80vh";
+    img.style.width = "auto";
+    img.style.height = "auto";
+    img.style.objectFit = "contain";
+    img.style.margin = "0 0 18px 0";
+
+    wrapper.appendChild(img);
+  });
+
   content.appendChild(wrapper);
 
 } else {
