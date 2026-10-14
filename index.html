@@ -154,6 +154,7 @@ if (work.startsWith("---")) {
   caption.style.marginBottom = "18px";
   caption.style.fontSize = "14px";
   caption.style.textAlign = "left";
+  caption.style.boxSizing = "border-box";
 
   wrapper.appendChild(caption);
 
@@ -167,7 +168,7 @@ if (work.startsWith("---")) {
   img.style.width = "auto";
   img.style.height = "auto";
   img.style.objectFit = "contain";
-  img.style.margin = "0 auto";
+  img.style.margin = "0";
 
   wrapper.appendChild(img);
   content.appendChild(wrapper);
