@@ -142,19 +142,23 @@ if (work.startsWith("---")) {
     const data = contents[work];
 
     if (data.type === "image") {
-      const img = document.createElement("img");
-      img.src = data.value;
-      img.alt = work;
-      img.style.display = "block";
-      img.style.maxWidth = "100%";
-      img.style.height = "auto";
-      content.appendChild(img);
-    } else {
-      const text = document.createElement("div");
-      text.style.whiteSpace = "pre-line";
-      text.textContent = data.value;
-      content.appendChild(text);
-    }
+  const img = document.createElement("img");
+  img.src = data.value;
+  img.alt = work;
+  img.style.display = "block";
+  img.style.maxWidth = "80%";
+  img.style.maxHeight = "80vh";
+  img.style.width = "auto";
+  img.style.height = "auto";
+  img.style.objectFit = "contain";
+  img.style.margin = "0 auto";
+  content.appendChild(img);
+} else {
+  const text = document.createElement("div");
+  text.style.whiteSpace = "pre-line";
+  text.textContent = data.value;
+  content.appendChild(text);
+}
   });
 }
 
