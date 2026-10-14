@@ -4,7 +4,7 @@
   <nav style="flex: 0 0 auto;">
 
     <!-- 작가 이름: 클릭되지 않음 -->
-    <p style="color: #FFC600; margin: 0 0 12px;">
+    <p style="color: black; margin: 0;">
       Hwang EunYoung
     </p>
 
@@ -12,8 +12,8 @@
 
   </nav>
 
-  <!-- 오른쪽 화면: 처음에는 비어 있음 -->
-  <main id="content" style="flex: 1; min-width: 0;"></main>
+  <!-- 오른쪽 내용: 처음에는 비어 있음 -->
+  <main id="content" style="flex: 1; min-width: 0; padding-top: 2em;"></main>
 
 </div>
 
@@ -75,7 +75,7 @@ works.forEach((work, index) => {
     title.textContent = work;
     content.appendChild(title);
 
-    // Contact 항목을 클릭했을 때
+    // Contact를 클릭하면 이메일 표시
     if (index === 0) {
       const email = document.createElement("p");
       email.textContent = "이메일 주소를 여기에 입력";
