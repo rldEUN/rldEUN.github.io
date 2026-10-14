@@ -86,7 +86,13 @@ contents["contact"] = {
   type: "text",
   value: "eunyoung.hwg@gmail.com"
 };
-
+contents["CV"] = {
+  type: "text",
+  value: `Education
+2020–2024, Seoul
+Exhibitions
+2025, Seoul`
+};
 /* =====================================
    3. 사진 등록 예시
 
@@ -138,7 +144,7 @@ works.forEach((work, index) => {
     } else {
 
       const text = document.createElement("div");
-
+      text.style.whiteSpace = "pre-line";
       text.textContent = data.value;
       content.appendChild(text);
 
