@@ -13,11 +13,18 @@
   </nav>
 
   <!-- 오른쪽 내용: 처음에는 비어 있음 -->
-  <main id="content" style="flex: 1; min-width: 0; padding-top: 2em;"></main>
+  <main
+    id="content"
+    style="flex: 1; min-width: 0; padding-top: 2em;"
+  ></main>
 
 </div>
 
 <script>
+/* =====================================
+   1. 왼쪽 메뉴 전체 목록
+===================================== */
+
 const works = [
   "contact",
   "CV",
@@ -59,30 +66,84 @@ const works = [
   "ㄷㄷㄹ"
 ];
 
+
+/* =====================================
+   2. 작품별 내용
+
+   모든 작품은 기본적으로 제목을 표시해.
+   사진을 추가할 때 해당 작품에 등록하면 돼.
+===================================== */
+
+const contents = {};
+
+works.forEach((work) => {
+  contents[work] = {
+    type: "text",
+    value: work
+  };
+});
+
+
+/* =====================================
+   3. 사진 등록 예시
+
+   실제 사진을 GitHub에 업로드한 뒤
+   아래 주석을 지우고 경로를 수정해.
+
+   contents["Four Sounds"] = {
+     type: "image",
+     value: "images/four-sounds.jpg"
+   };
+
+===================================== */
+
+// 사진을 추가할 작품만 아래에 등록하면 돼.
+
+
+/* =====================================
+   4. 왼쪽 메뉴 생성
+===================================== */
+
 const menu = document.getElementById("menu");
 const content = document.getElementById("content");
 
 works.forEach((work, index) => {
+
   const item = document.createElement("div");
 
   item.textContent = work;
   item.style.cursor = "pointer";
 
   item.addEventListener("click", () => {
+
     content.replaceChildren();
 
-    const title = document.createElement("div");
-    title.textContent = work;
-    content.appendChild(title);
+    const data = contents[work];
 
-    // Contact를 클릭하면 이메일 표시
-    if (index === 0) {
-      const email = document.createElement("p");
-      email.textContent = "이메일 주소를 여기에 입력";
-      content.appendChild(email);
+    if (data.type === "image") {
+
+      const img = document.createElement("img");
+
+      img.src = data.value;
+      img.alt = work;
+      img.style.display = "block";
+      img.style.maxWidth = "100%";
+      img.style.height = "auto";
+
+      content.appendChild(img);
+
+    } else {
+
+      const text = document.createElement("div");
+
+      text.textContent = data.value;
+      content.appendChild(text);
+
     }
+
   });
 
   menu.appendChild(item);
+
 });
 </script>
