@@ -43,6 +43,7 @@ const works = [
   "Yes or No or Yes or No or",
   "Books",
   "To be kept in this order",
+  "---2026--------------------------",
   "Four Corners",
   "Bookmark",
   "Artist's Plate",
@@ -51,6 +52,7 @@ const works = [
   "Inkjet Photo Painting by Printer",
   "Oil Painting",
   "Business Cards",
+  "---2025--------------------------",
   "E-flat",
   "Books",
   "ABC business card",
@@ -121,7 +123,13 @@ works.forEach((work, index) => {
   const item = document.createElement("div");
 
   item.textContent = work;
+
+if (work.startsWith("-----")) {
+  item.style.cursor = "default";
+  item.style.pointerEvents = "none";
+} else {
   item.style.cursor = "pointer";
+}
 
   item.addEventListener("click", () => {
 
