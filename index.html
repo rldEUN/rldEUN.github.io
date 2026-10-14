@@ -123,6 +123,10 @@ works.forEach((work, index) => {
   const item = document.createElement("div");
 
   item.textContent = work;
+ 
+  if (work === "Four Sounds") {
+  item.style.color = "#FF0000";
+}
 
 if (work.startsWith("---")) {
   item.style.cursor = "default";
