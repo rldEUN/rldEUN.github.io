@@ -102,9 +102,10 @@ Exhibitions
    아래 주석을 지우고 경로를 수정해.
 
    contents["Four Sounds"] = {
-     type: "image",
-     value: "images/four-sounds.jpg"
-   };
+  type: "image",
+  value: "four-sounds.jpg",
+  caption: "Four Sounds, 2026"
+};
 
 ===================================== */
 
@@ -142,6 +143,20 @@ if (work.startsWith("---")) {
     const data = contents[work];
 
     if (data.type === "image") {
+  const wrapper = document.createElement("div");
+  wrapper.style.width = "100%";
+
+  // 캡션 만들기
+  const caption = document.createElement("div");
+  caption.textContent = data.caption || "";
+  caption.style.width = "80%";
+  caption.style.marginBottom = "18px";
+  caption.style.fontSize = "14px";
+  caption.style.textAlign = "left";
+
+  wrapper.appendChild(caption);
+
+  // 이미지 만들기
   const img = document.createElement("img");
   img.src = data.value;
   img.alt = work;
@@ -152,7 +167,10 @@ if (work.startsWith("---")) {
   img.style.height = "auto";
   img.style.objectFit = "contain";
   img.style.margin = "0 auto";
-  content.appendChild(img);
+
+  wrapper.appendChild(img);
+  content.appendChild(wrapper);
+
 } else {
   const text = document.createElement("div");
   text.style.whiteSpace = "pre-line";
