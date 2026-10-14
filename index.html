@@ -1,43 +1,88 @@
-<div style="font-family: serif; line-height: 2;">
-  <p style="margin: 0;">
-    Hwang EunYoung
-  </p>
-  contact<br>
-  CV<br>
-  Four Sounds<br>
-  Passing Time, Eternal Beauty<br>
-  7" × 5"<br>
-5 1/2" × 4 1/4"<br>
-  GOOD ARTIST<br>
-  Holes<br>
-  Points before Lines<br>
-  Lines before Points<br>
-  Left<br>
-  Erase this. No,leave this.<br>
-  Once Twice Three times Four times<br>
-  Yes<br>
-  Yes or No or Yes or No or<br>
-  Books<br>
-  To be kept in this order<br>
-  Four Corners<br>
-  Bookmark<br>
-  Artist's Plate<br>
-  Artist's Plate<br>
-  An Abridged Book<br>
-  Inkjet Photo Painting by Printer<br>
-  Oil Painting<br>
-  Business Cards<br>
-  E-flat<br>
-  Books<br>
-  ABC business card<br>
-  Coloring Book<br>
-  Coloring Book<br>
-  at the same time<br>
-  Talking Heads<br>
-  Action Pointing<br>
-  Air Mailed by Airmail<br>
-  Arc<br>
-  Back<br>
-  Different Colored Circles<br>
-  ㄷㄷㄹ
+<div style="display: flex; gap: 80px; font-family: serif; line-height: 2;">
+
+  <!-- 왼쪽 메뉴 -->
+  <nav style="flex: 0 0 auto;">
+
+    <!-- 작가 이름: 클릭되지 않음 -->
+    <p style="color: #FFC600; margin: 0 0 12px;">
+      Hwang EunYoung
+    </p>
+
+    <div id="menu"></div>
+
+  </nav>
+
+  <!-- 오른쪽 화면: 처음에는 비어 있음 -->
+  <main id="content" style="flex: 1; min-width: 0;"></main>
+
 </div>
+
+<script>
+const works = [
+  "contact",
+  "CV",
+  "Four Sounds",
+  "Passing Time, Eternal Beauty",
+  '7" × 5"',
+  '5 1/2" × 4 1/4"',
+  "GOOD ARTIST",
+  "Holes",
+  "Points before Lines",
+  "Lines before Points",
+  "Left",
+  "Erase this. No,leave this.",
+  "Once Twice Three times Four times",
+  "Yes",
+  "Yes or No or Yes or No or",
+  "Books",
+  "To be kept in this order",
+  "Four Corners",
+  "Bookmark",
+  "Artist's Plate",
+  "Artist's Plate",
+  "An Abridged Book",
+  "Inkjet Photo Painting by Printer",
+  "Oil Painting",
+  "Business Cards",
+  "E-flat",
+  "Books",
+  "ABC business card",
+  "Coloring Book",
+  "Coloring Book",
+  "at the same time",
+  "Talking Heads",
+  "Action Pointing",
+  "Air Mailed by Airmail",
+  "Arc",
+  "Back",
+  "Different Colored Circles",
+  "ㄷㄷㄹ"
+];
+
+const menu = document.getElementById("menu");
+const content = document.getElementById("content");
+
+works.forEach((work, index) => {
+  const item = document.createElement("div");
+
+  item.textContent = work;
+  item.style.cursor = "pointer";
+
+  item.addEventListener("click", () => {
+    content.replaceChildren();
+
+    const title = document.createElement("div");
+    title.textContent = work;
+    content.appendChild(title);
+
+    // Contact 항목을 클릭했을 때
+    if (index === 0) {
+      const email = document.createElement("p");
+      email.textContent = "이메일 주소를 여기에 입력";
+      content.appendChild(email);
+    }
+  });
+
+  menu.appendChild(item);
+});
+</script>
