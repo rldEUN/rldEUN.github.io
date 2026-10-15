@@ -78,12 +78,18 @@
     }
 
     .portfolio #menu {
-      display: flex;
-      flex-wrap: wrap;
-      column-gap: 14px;
-      row-gap: 2px;
-      width: 100%;
-    }
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0;
+  width: 100%;
+}
+
+.portfolio #menu > div {
+  width: fit-content;
+  max-width: 100%;
+  overflow-wrap: normal;
+}
 
     .portfolio #menu > div {
       max-width: 100%;
