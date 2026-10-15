@@ -4,122 +4,159 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hwang EunYoung</title>
-</head>
-  
-<body>
-<style>
-  /* ================================
-     1. 기본 레이아웃
-  ================================ */
 
-  * {
-    box-sizing: border-box;
-  }
+  <style>
+    /* =====================================
+       1. 기본 레이아웃
+    ===================================== */
 
-  body {
-    margin: 0;
-    padding: 0;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  .portfolio {
-    display: flex;
-    align-items: flex-start;
-    gap: 80px;
-    padding: 0;
-    font-family: serif;
-    line-height: 2;
-    font-size: 13px;
-  }
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-  .portfolio nav {
-    flex: 0 0 auto;
-  }
-
-  .portfolio #content {
-    flex: 1;
-    min-width: 0;
-    padding-top: 2em;
-  }
-
-  .portfolio #menu > div {
-    cursor: pointer;
-  }
-
-  /* ================================
-     2. 작품 이미지
-  ================================ */
-
-  .portfolio #content img {
-    display: block;
-    width: 70%;
-    max-width: 70%;
-    height: auto;
-    margin: 0 0 18px 0;
-    object-fit: contain;
-  }
-
-  /* ================================
-     3. 모바일 최적화
-  ================================ */
-
-  @media screen and (max-width: 768px) {
     .portfolio {
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 80px;
+      padding: 0;
+      font-family: serif;
+      line-height: 2;
       font-size: 13px;
-      line-height: 1.8;
     }
 
     .portfolio nav {
-      width: 100%;
-      flex: none;
-    }
-
-    .portfolio #menu {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  gap: 0;
-  width: 100%;
-}
-
-.portfolio #menu > div {
-  width: fit-content;
-  max-width: 100%;
-  overflow-wrap: normal;
-}
-
-    .portfolio #menu > div {
-      max-width: 100%;
-      overflow-wrap: anywhere;
+      flex: 0 0 auto;
     }
 
     .portfolio #content {
-      width: 100%;
+      flex: 1;
       min-width: 0;
-      padding-top: 12px;
+      padding-top: 2em;
     }
 
-    .portfolio #content img {
-      width: 100% !important;
-      max-width: 100% !important;
-      max-height: none !important;
-      height: auto !important;
+    .portfolio #menu > div {
+      cursor: pointer;
+    }
+
+    /* =====================================
+       2. PC 작품 이미지
+    ===================================== */
+
+    #artwork img {
+      display: block;
+      width: 70%;
+      max-width: 70%;
+      height: auto;
+      margin: 0 0 18px 0;
       object-fit: contain;
     }
 
-    .portfolio #content div {
-      max-width: 100%;
-      box-sizing: border-box;
+    /* 뒤로 가기 버튼: PC에서는 숨김 */
+    #backButton {
+      display: none;
+      border: none;
+      background: none;
+      padding: 0 0 16px 0;
+      font-family: serif;
+      font-size: 16px;
+      text-align: left;
+      cursor: pointer;
     }
-  }
-</style>
 
-<div class="portfolio">
+    /* =====================================
+       3. 모바일 화면
+    ===================================== */
 
-  <!-- 왼쪽 메뉴 / 모바일에서는 상단 -->
+    @media screen and (max-width: 768px) {
+      .portfolio {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        width: 100%;
+        min-height: 100vh;
+        padding: 16px;
+        font-size: 13px;
+        line-height: 1.8;
+      }
+
+      .portfolio nav {
+        width: 100%;
+        flex: none;
+      }
+
+      .portfolio #menu {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 0;
+        width: 100%;
+        margin-top: 8px;
+      }
+
+      .portfolio #menu > div {
+        width: fit-content;
+        max-width: 100%;
+        overflow-wrap: normal;
+      }
+
+      /* 메뉴 화면에서는 작품 영역 숨김 */
+      .portfolio:not(.show-artwork) #content {
+        display: none;
+      }
+
+      /* 작품 화면에서는 메뉴 숨김 */
+      .portfolio.show-artwork nav {
+        display: none;
+      }
+
+      .portfolio.show-artwork #content {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        padding-top: 0;
+      }
+
+      /* 뒤로 가기 버튼 */
+      .portfolio.show-artwork #backButton {
+        display: block;
+      }
+
+      /* 모바일 이미지 너비 */
+      #artwork {
+        width: 100%;
+      }
+
+      #artwork img {
+        display: block;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        object-fit: contain;
+        margin: 0 0 18px 0;
+      }
+
+      #artwork .artwork-caption {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 18px;
+        font-size: 14px;
+        white-space: pre-line;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="portfolio" id="portfolio">
+
+  <!-- 메뉴 화면 -->
   <nav>
     <p style="color: black; margin: 0;">
       Hwang EunYoung
@@ -128,8 +165,14 @@
     <div id="menu"></div>
   </nav>
 
-  <!-- 작품 내용 -->
-  <main id="content"></main>
+  <!-- 작품 화면 -->
+  <main id="content">
+    <button id="backButton" type="button" aria-label="작품 목록으로 돌아가기">
+      ←
+    </button>
+
+    <div id="artwork"></div>
+  </main>
 
 </div>
 
@@ -226,11 +269,78 @@ Micah Lexier, Hwang Eunyoung
 
 
 /* =====================================
-   4. 왼쪽 메뉴 생성
+   4. 메뉴와 화면 전환
 ===================================== */
 
+const portfolio = document.getElementById("portfolio");
 const menu = document.getElementById("menu");
 const content = document.getElementById("content");
+const artwork = document.getElementById("artwork");
+const backButton = document.getElementById("backButton");
+
+/* 메뉴 화면으로 돌아가기 */
+function showMenu() {
+  portfolio.classList.remove("show-artwork");
+  window.scrollTo(0, 0);
+}
+
+backButton.addEventListener("click", showMenu);
+
+/* 작품 표시 */
+function showWork(work) {
+  const data = contents[work];
+
+  artwork.replaceChildren();
+
+  if (!data) return;
+
+  if (data.type === "image") {
+    // 작품 캡션
+    const caption = document.createElement("div");
+    caption.className = "artwork-caption";
+    caption.textContent = data.caption || "";
+    caption.style.whiteSpace = "pre-line";
+    caption.style.width = "70%";
+    caption.style.marginBottom = "18px";
+    caption.style.fontSize = "14px";
+    caption.style.textAlign = "left";
+
+    artwork.appendChild(caption);
+
+    // 이미지 한 장 또는 여러 장
+    const images = Array.isArray(data.value)
+      ? data.value
+      : [data.value];
+
+    images.forEach((src) => {
+      const img = document.createElement("img");
+
+      img.src = src;
+      img.alt = work;
+
+      artwork.appendChild(img);
+    });
+
+  } else {
+    const text = document.createElement("div");
+
+    text.style.whiteSpace = "pre-line";
+    text.textContent = data.value;
+
+    artwork.appendChild(text);
+  }
+
+  // 모바일에서는 작품 화면으로 전환
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    portfolio.classList.add("show-artwork");
+    window.scrollTo(0, 0);
+  }
+}
+
+
+/* =====================================
+   5. 메뉴 생성
+===================================== */
 
 works.forEach((work) => {
   const item = document.createElement("div");
@@ -243,68 +353,16 @@ works.forEach((work) => {
 
   if (work.startsWith("---")) {
     item.style.cursor = "default";
+    item.style.pointerEvents = "none";
   } else {
-    item.style.cursor = "pointer";
-
     item.addEventListener("click", () => {
-      content.replaceChildren();
-
-      const data = contents[work];
-
-      if (data.type === "image") {
-        const wrapper = document.createElement("div");
-        wrapper.style.width = "100%";
-
-        // 작품 캡션
-        const caption = document.createElement("div");
-        caption.textContent = data.caption || "";
-        caption.style.whiteSpace = "pre-line";
-        caption.style.width = "70%";
-        caption.style.marginBottom = "18px";
-        caption.style.fontSize = "14px";
-        caption.style.textAlign = "left";
-        caption.style.boxSizing = "border-box";
-
-        wrapper.appendChild(caption);
-
-        // 이미지 한 장 또는 여러 장 표시
-        const images = Array.isArray(data.value)
-          ? data.value
-          : [data.value];
-
-        images.forEach((src) => {
-          const img = document.createElement("img");
-
-          img.src = src;
-          img.alt = work;
-
-          img.style.display = "block";
-          img.style.width = "70%";
-          img.style.maxWidth = "70%";
-          img.style.height = "auto";
-          img.style.maxHeight = "none";
-          img.style.objectFit = "contain";
-          img.style.margin = "0 0 18px 0";
-          img.style.boxSizing = "border-box";
-
-          wrapper.appendChild(img);
-        });
-
-        content.appendChild(wrapper);
-
-      } else {
-        const text = document.createElement("div");
-
-        text.style.whiteSpace = "pre-line";
-        text.textContent = data.value;
-
-        content.appendChild(text);
-      }
+      showWork(work);
     });
   }
 
   menu.appendChild(item);
 });
 </script>
-  </body>
+
+</body>
 </html>
