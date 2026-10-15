@@ -338,24 +338,50 @@ function showWork(work) {
 }
 
 
+
+
 /* =====================================
-   5. 메뉴 생성
+   5. 메뉴 생성 및 선택한 작품 표시
 ===================================== */
+
+let selectedWork = null;
 
 works.forEach((work) => {
   const item = document.createElement("div");
 
   item.textContent = work;
 
+  // Four Sounds는 항상 빨간색
   if (work === "Four Sounds") {
-    item.style.color = "#FF0000";
+    item.style.color = "red";
   }
 
+  // 연도 구분선은 클릭할 수 없음
   if (work.startsWith("---")) {
     item.style.cursor = "default";
     item.style.pointerEvents = "none";
   } else {
+    item.style.cursor = "pointer";
+
     item.addEventListener("click", () => {
+
+      // 이전에 선택한 메뉴의 색상 복원
+      if (selectedWork) {
+        selectedWork.style.color =
+          selectedWork.textContent === "Four Sounds"
+            ? "red"
+            : "black";
+      }
+
+      // 현재 클릭한 메뉴 저장
+      selectedWork = item;
+
+      // Four Sounds 외에 클릭한 메뉴는 보라색
+      if (work !== "Four Sounds") {
+        item.style.color = "purple";
+      }
+
+      // 선택한 작품 표시
       showWork(work);
     });
   }
