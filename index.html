@@ -1,22 +1,120 @@
-<div style="display: flex; gap: 80px; font-family: serif; line-height: 2; font-size: 13px;">
+<style>
+  /* ================================
+     1. 기본 레이아웃
+  ================================ */
 
-  <!-- 왼쪽 메뉴 -->
-  <nav style="flex: 0 0 auto;">
+  * {
+    box-sizing: border-box;
+  }
 
-    <!-- 작가 이름: 클릭되지 않음 -->
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .portfolio {
+    display: flex;
+    align-items: flex-start;
+    gap: 80px;
+    padding: 0;
+    font-family: serif;
+    line-height: 2;
+    font-size: 13px;
+  }
+
+  .portfolio nav {
+    flex: 0 0 auto;
+  }
+
+  .portfolio #content {
+    flex: 1;
+    min-width: 0;
+    padding-top: 2em;
+  }
+
+  .portfolio #menu > div {
+    cursor: pointer;
+  }
+
+  /* ================================
+     2. 작품 이미지
+  ================================ */
+
+  .portfolio #content img {
+    display: block;
+    width: 70%;
+    max-width: 70%;
+    height: auto;
+    margin: 0 0 18px 0;
+    object-fit: contain;
+  }
+
+  /* ================================
+     3. 모바일 최적화
+  ================================ */
+
+  @media screen and (max-width: 768px) {
+    .portfolio {
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .portfolio nav {
+      width: 100%;
+      flex: none;
+    }
+
+    .portfolio #menu {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 14px;
+      row-gap: 2px;
+      width: 100%;
+    }
+
+    .portfolio #menu > div {
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
+    .portfolio #content {
+      width: 100%;
+      min-width: 0;
+      padding-top: 12px;
+    }
+
+    .portfolio #content img {
+      width: 100% !important;
+      max-width: 100% !important;
+      max-height: none !important;
+      height: auto !important;
+      object-fit: contain;
+    }
+
+    .portfolio #content div {
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+  }
+</style>
+
+<div class="portfolio">
+
+  <!-- 왼쪽 메뉴 / 모바일에서는 상단 -->
+  <nav>
     <p style="color: black; margin: 0;">
-      Hwang EunYoung 
+      Hwang EunYoung
     </p>
 
     <div id="menu"></div>
-
   </nav>
 
-  <!-- 오른쪽 내용: 처음에는 비어 있음 -->
-  <main
-    id="content"
-    style="flex: 1; min-width: 0; padding-top: 2em;"
-  ></main>
+  <!-- 작품 내용 -->
+  <main id="content"></main>
 
 </div>
 
@@ -71,9 +169,6 @@ const works = [
 
 /* =====================================
    2. 작품별 내용
-
-   모든 작품은 기본적으로 제목을 표시해.
-   사진을 추가할 때 해당 작품에 등록하면 돼.
 ===================================== */
 
 const contents = {};
@@ -84,10 +179,12 @@ works.forEach((work) => {
     value: work
   };
 });
+
 contents["contact"] = {
   type: "text",
   value: "eunyoung.hwg@gmail.com"
 };
+
 contents["CV"] = {
   type: "text",
   value: `Education
@@ -95,21 +192,12 @@ contents["CV"] = {
 Exhibitions
 2025, Seoul`
 };
+
+
 /* =====================================
-   3. 사진 등록 예시
-
-   실제 사진을 GitHub에 업로드한 뒤
-   아래 주석을 지우고 경로를 수정해.
-
-   contents["Four Sounds"] = {
-  type: "image",
-  value: "four-sounds_004.jpg",
-  caption: "Four Sounds, 2026"
-};
-
+   3. 작품 사진 등록
 ===================================== */
 
-// 사진을 추가할 작품만 아래에 등록하면 돼.
 contents["Four Sounds"] = {
   type: "image",
   value: [
@@ -121,6 +209,7 @@ Micah Lexier, Hwang Eunyoung
 2026`
 };
 
+
 /* =====================================
    4. 왼쪽 메뉴 생성
 ===================================== */
@@ -128,79 +217,77 @@ Micah Lexier, Hwang Eunyoung
 const menu = document.getElementById("menu");
 const content = document.getElementById("content");
 
-works.forEach((work, index) => {
-
+works.forEach((work) => {
   const item = document.createElement("div");
 
   item.textContent = work;
- 
+
   if (work === "Four Sounds") {
-  item.style.color = "#FF0000";
-}
+    item.style.color = "#FF0000";
+  }
 
-if (work.startsWith("---")) {
-  item.style.cursor = "default";
-} else {
-  item.style.cursor = "pointer";
+  if (work.startsWith("---")) {
+    item.style.cursor = "default";
+  } else {
+    item.style.cursor = "pointer";
 
-  item.addEventListener("click", () => {
-    content.replaceChildren();
+    item.addEventListener("click", () => {
+      content.replaceChildren();
 
-    const data = contents[work];
+      const data = contents[work];
 
-    if (data.type === "image") {
-  const wrapper = document.createElement("div");
-  wrapper.style.width = "100%";
+      if (data.type === "image") {
+        const wrapper = document.createElement("div");
+        wrapper.style.width = "100%";
 
-  // 캡션 만들기
-  const caption = document.createElement("div");
-  caption.textContent = data.caption || "";
-  caption.style.whiteSpace = "pre-line";
-  caption.style.width = "70%";
-  caption.style.marginBottom = "18px";
-  caption.style.fontSize = "14px";
-  caption.style.textAlign = "left";
-  caption.style.boxSizing = "border-box";
+        // 작품 캡션
+        const caption = document.createElement("div");
+        caption.textContent = data.caption || "";
+        caption.style.whiteSpace = "pre-line";
+        caption.style.width = "70%";
+        caption.style.marginBottom = "18px";
+        caption.style.fontSize = "14px";
+        caption.style.textAlign = "left";
+        caption.style.boxSizing = "border-box";
 
-  wrapper.appendChild(caption);
+        wrapper.appendChild(caption);
 
-  // 이미지 만들기
-  const images = Array.isArray(data.value)
-    ? data.value
-    : [data.value];
+        // 이미지 한 장 또는 여러 장 표시
+        const images = Array.isArray(data.value)
+          ? data.value
+          : [data.value];
 
-  images.forEach((src) => {
-  const img = document.createElement("img");
-  img.src = src;
-  img.alt = work;
+        images.forEach((src) => {
+          const img = document.createElement("img");
 
-  img.style.display = "block";
-  img.style.width = "70%";
-  img.style.maxWidth = "none";
-  img.style.height = "auto";
-  img.style.maxHeight = "none";
-  img.style.objectFit = "contain";
-  img.style.flexShrink = "0";
-  img.style.margin = "0 0 18px 0";
-  img.style.boxSizing = "border-box";
+          img.src = src;
+          img.alt = work;
 
-  wrapper.appendChild(img);
-});
+          img.style.display = "block";
+          img.style.width = "70%";
+          img.style.maxWidth = "70%";
+          img.style.height = "auto";
+          img.style.maxHeight = "none";
+          img.style.objectFit = "contain";
+          img.style.margin = "0 0 18px 0";
+          img.style.boxSizing = "border-box";
 
-content.appendChild(wrapper);
+          wrapper.appendChild(img);
+        });
 
-  content.appendChild(wrapper);
+        content.appendChild(wrapper);
 
-} else {
-  const text = document.createElement("div");
-  text.style.whiteSpace = "pre-line";
-  text.textContent = data.value;
-  content.appendChild(text);
-}
-  });
-}
+      } else {
+        const text = document.createElement("div");
 
-menu.appendChild(item);
+        text.style.whiteSpace = "pre-line";
+        text.textContent = data.value;
 
+        content.appendChild(text);
+      }
+    });
+  }
+
+  menu.appendChild(item);
 });
 </script>
