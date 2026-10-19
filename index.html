@@ -142,7 +142,7 @@
       }
 
       #artwork .artwork-caption {
-        width: 100%;
+        width: 100% !important;
         max-width: 100%;
         margin-bottom: 18px;
         font-size: 14px;
@@ -167,7 +167,11 @@
 
   <!-- 작품 화면 -->
   <main id="content">
-    <button id="backButton" type="button" aria-label="작품 목록으로 돌아가기">
+    <button
+      id="backButton"
+      type="button"
+      aria-label="작품 목록으로 돌아가기"
+    >
       ←
     </button>
 
@@ -179,49 +183,79 @@
 <script>
 /* =====================================
    1. 왼쪽 메뉴 전체 목록
+   label: 화면에 표시되는 이름
+   id: 실제 콘텐츠를 연결하는 고유 ID
 ===================================== */
 
 const works = [
-  "contact",
-  "CV",
-  "Four Sounds",
-  "Passing Time, Eternal Beauty",
-  '7" × 5"',
-  '5 1/2" × 4 1/4"',
-  "GOOD ARTIST",
-  "Holes",
-  "Points before Lines",
-  "Lines before Points",
-  "Left",
-  "Erase this. No,leave this.",
-  "Once Twice Three times Four times",
-  "Yes",
-  "Yes or No or Yes or No or",
-  "Books",
-  "To be kept in this order",
-  "---2026--------------------------",
-  "Four Corners",
-  "Bookmark",
-  "Artist's Plate",
-  "Artist's Plate",
-  "An Abridged Book",
-  "Inkjet Photo Painting by Printer",
-  "Oil Painting",
-  "Business Cards",
-  "---2025--------------------------",
-  "E-flat",
-  "Books",
-  "ABC business card",
-  "Coloring Book",
-  "Coloring Book",
-  "at the same time",
-  "Talking Heads",
-  "Action Pointing",
-  "Air Mailed by Airmail",
-  "Arc",
-  "Back",
-  "Different Colored Circles",
-  "ㄷㄷㄹ"
+  { label: "contact", id: "contact" },
+  { label: "CV", id: "CV" },
+  { label: "Four Sounds", id: "Four Sounds" },
+  {
+    label: "Passing Time, Eternal Beauty",
+    id: "Passing Time, Eternal Beauty"
+  },
+  { label: '7" × 5"', id: '7" × 5"' },
+  { label: '5 1/2" × 4 1/4"', id: '5 1/2" × 4 1/4"' },
+  { label: "GOOD ARTIST", id: "GOOD ARTIST" },
+  { label: "Holes", id: "Holes" },
+  { label: "Points before Lines", id: "Points before Lines" },
+  { label: "Lines before Points", id: "Lines before Points" },
+  { label: "Left", id: "Left" },
+  { label: "Erase this. No,leave this.", id: "Erase this. No,leave this." },
+  {
+    label: "Once Twice Three times Four times",
+    id: "Once Twice Three times Four times"
+  },
+  { label: "Yes", id: "Yes" },
+  { label: "Yes or No or Yes or No or", id: "Yes or No or Yes or No or" },
+
+  /* Books — 2026 */
+  { label: "Books", id: "Books_2026" },
+
+  { label: "To be kept in this order", id: "To be kept in this order" },
+  { label: "---2026--------------------------", id: null },
+
+  { label: "Four Corners", id: "Four Corners" },
+  { label: "Bookmark", id: "Bookmark" },
+
+  /* Artist's Plate — 첫 번째 항목 */
+  { label: "Artist's Plate", id: "Artists_Plate_2026" },
+
+  /* Artist's Plate — 두 번째 항목 */
+  { label: "Artist's Plate", id: "Artists_Plate_2026_2" },
+
+  { label: "An Abridged Book", id: "An Abridged Book" },
+  {
+    label: "Inkjet Photo Painting by Printer",
+    id: "Inkjet Photo Painting by Printer"
+  },
+  { label: "Oil Painting", id: "Oil Painting" },
+  { label: "Business Cards", id: "Business Cards" },
+
+  { label: "---2025--------------------------", id: null },
+
+  { label: "E-flat", id: "E-flat" },
+
+  /* Books — 2025 */
+  { label: "Books", id: "Books_2025" },
+
+  { label: "ABC business card", id: "ABC business card" },
+
+  /* Coloring Book — 첫 번째 항목 */
+  { label: "Coloring Book", id: "Coloring_Book_2025" },
+
+  /* Coloring Book — 두 번째 항목 */
+  { label: "Coloring Book", id: "Coloring_Book_2025_2" },
+
+  { label: "at the same time", id: "at the same time" },
+  { label: "Talking Heads", id: "Talking Heads" },
+  { label: "Action Pointing", id: "Action Pointing" },
+  { label: "Air Mailed by Airmail", id: "Air Mailed by Airmail" },
+  { label: "Arc", id: "Arc" },
+  { label: "Back", id: "Back" },
+  { label: "Different Colored Circles", id: "Different Colored Circles" },
+  { label: "ㄷㄷㄹ", id: "ㄷㄷㄹ" }
 ];
 
 
@@ -231,11 +265,14 @@ const works = [
 
 const contents = {};
 
+/* 등록하지 않은 작품은 기본적으로 텍스트 표시 */
 works.forEach((work) => {
-  contents[work] = {
-    type: "text",
-    value: work
-  };
+  if (work.id !== null) {
+    contents[work.id] = {
+      type: "text",
+      value: work.label
+    };
+  }
 });
 
 contents["contact"] = {
@@ -254,6 +291,9 @@ Exhibitions
 
 /* =====================================
    3. 작품 사진 등록
+
+   각 작품은 고유 ID로 등록.
+   value에 이미지 파일명을 입력하면 됨.
 ===================================== */
 
 contents["Four Sounds"] = {
@@ -263,49 +303,67 @@ contents["Four Sounds"] = {
     "four-sounds_011.jpg",
     "four-sounds_012.jpg",
     "four-sounds_013.jpg",
-    "four-sounds_018.jpg",
+    "four-sounds_018.jpg"
   ],
   caption: `Four Sounds,
 Micah Lexier, Hwang Eunyoung
 2026`
 };
 
-  contents["Passing Time, Eternal Beauty"] = {
+contents["Passing Time, Eternal Beauty"] = {
   type: "image",
   value: [
     "B_09.jpg",
     "B_08.jpg",
     "B_04.jpg",
     "B_10.jpg",
-    "B_12.jpg",
+    "B_12.jpg"
   ],
   caption: `Passing Time, Eternal Beauty,
 Hwang Eunyoung
 2026`
 };
 
-   contents["GOOD ARTIST"] = {
+contents["GOOD ARTIST"] = {
   type: "image",
   value: [
     "P_02.jpg",
-    "P_05.jpg",
+    "P_05.jpg"
   ],
   caption: `HWANG EUNYOUNG
-  GOOD ARTIST
-  BY APPOINMTMEMNT ONLY
-  2026`
+GOOD ARTIST
+BY APPOINMTMEMNT ONLY
+2026`
 };
 
-
-  contents["Holes"] = {
+contents["Holes"] = {
   type: "image",
   value: [
     "H_01.jpg",
     "H_03.jpg",
-    "H_04.jpg",
+    "H_04.jpg"
   ],
   caption: `Holes
-  2026`
+2026`
+};
+
+
+/* Books — 2026 항목 */
+contents["Books_2026"] = {
+  type: "image",
+  value: [
+    "Books_01.jpg"
+  ],
+  caption: `Books
+2026`
+};
+
+
+/* Books — 2025 항목
+   아래 파일명과 캡션은 실제 작품에 맞게 수정해 줘. */
+contents["Books_2025"] = {
+  type: "text",
+  value: "Books"
 };
 
 
@@ -315,7 +373,6 @@ Hwang Eunyoung
 
 const portfolio = document.getElementById("portfolio");
 const menu = document.getElementById("menu");
-const content = document.getElementById("content");
 const artwork = document.getElementById("artwork");
 const backButton = document.getElementById("backButton");
 
@@ -327,17 +384,19 @@ function showMenu() {
 
 backButton.addEventListener("click", showMenu);
 
-/* 작품 표시 */
-function showWork(work) {
-  const data = contents[work];
+
+/* 작품 표시: 메뉴 이름이 아닌 고유 ID로 검색 */
+function showWork(workId) {
+  const data = contents[workId];
 
   artwork.replaceChildren();
 
   if (!data) return;
 
   if (data.type === "image") {
-    // 작품 캡션
+    /* 작품 캡션 */
     const caption = document.createElement("div");
+
     caption.className = "artwork-caption";
     caption.textContent = data.caption || "";
     caption.style.whiteSpace = "pre-line";
@@ -348,7 +407,7 @@ function showWork(work) {
 
     artwork.appendChild(caption);
 
-    // 이미지 한 장 또는 여러 장
+    /* 이미지 한 장 또는 여러 장 */
     const images = Array.isArray(data.value)
       ? data.value
       : [data.value];
@@ -357,12 +416,13 @@ function showWork(work) {
       const img = document.createElement("img");
 
       img.src = src;
-      img.alt = work;
+      img.alt = workId;
 
       artwork.appendChild(img);
     });
 
   } else {
+    /* 일반 텍스트 작품 */
     const text = document.createElement("div");
 
     text.style.whiteSpace = "pre-line";
@@ -371,14 +431,12 @@ function showWork(work) {
     artwork.appendChild(text);
   }
 
-  // 모바일에서는 작품 화면으로 전환
+  /* 모바일에서는 작품 화면으로 전환 */
   if (window.matchMedia("(max-width: 768px)").matches) {
     portfolio.classList.add("show-artwork");
     window.scrollTo(0, 0);
   }
 }
-
-
 
 
 /* =====================================
@@ -390,38 +448,41 @@ let selectedWork = null;
 works.forEach((work) => {
   const item = document.createElement("div");
 
-  item.textContent = work;
+  /* 화면에는 label만 표시 */
+  item.textContent = work.label;
 
-  // Four Sounds는 항상 빨간색
-  if (work === "Four Sounds") {
+  /* Four Sounds는 항상 빨간색 */
+  if (work.id === "Four Sounds") {
     item.style.color = "red";
   }
 
-  // 연도 구분선은 클릭할 수 없음
-  if (work.startsWith("---")) {
+  /* 연도 구분선은 클릭할 수 없음 */
+  if (work.id === null) {
     item.style.cursor = "default";
     item.style.pointerEvents = "none";
+
   } else {
     item.style.cursor = "pointer";
 
     item.addEventListener("click", () => {
 
-      // 이전에 선택한 메뉴의 색상 복원
+      /* 이전 메뉴의 색상 복원 */
       if (selectedWork) {
         selectedWork.style.color =
-          selectedWork.textContent === "Four Sounds"
+          selectedWork.dataset.workId === "Four Sounds"
             ? "red"
             : "black";
       }
 
-      // 현재 클릭한 메뉴 저장
+      /* 현재 선택한 메뉴 저장 */
       selectedWork = item;
+      item.dataset.workId = work.id;
 
-      // 클릭한 메뉴는 모두 레몬옐로우
-item.style.color = "#FFF44F";
+      /* 선택한 메뉴는 레몬옐로우 */
+      item.style.color = "#FFF44F";
 
-      // 선택한 작품 표시
-      showWork(work);
+      /* 고유 ID로 작품 표시 */
+      showWork(work.id);
     });
   }
 
